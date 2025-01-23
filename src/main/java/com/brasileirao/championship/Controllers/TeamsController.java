@@ -6,6 +6,7 @@ import com.brasileirao.championship.dto.TeamsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,6 +24,12 @@ public class TeamsController {
     public ResponseEntity<List<TeamsDto>> findAll() {
         List<Teams> teams = services.findAll();
         List<TeamsDto> dto = teams.stream().map(TeamsDto::new).collect(Collectors.toList());
+        return ResponseEntity.ok().body(dto);
+    }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<TeamsDto> findTeamsbyId(@PathVariable Long id){
+        TeamsDto dto = services.findTeamById(id);
         return ResponseEntity.ok().body(dto);
     }
 }

@@ -8,7 +8,6 @@ import java.io.Serializable;
 @Entity
 @Table(name = "teams", schema = "public")
 public class Teams implements Serializable {
-    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +22,6 @@ public class Teams implements Serializable {
     private String region;
 
     public Teams(){
-
     }
 
     public Teams(Long id, String team, String acronym, String full_name, Integer founded, String stadium, String city, String state, String region) {
