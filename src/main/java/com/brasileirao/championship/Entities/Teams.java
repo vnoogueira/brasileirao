@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "teams", schema = "public")
@@ -22,7 +23,7 @@ public class Teams implements Serializable {
     private String state;
     private String region;
 
-    public Teams(){
+    public Teams() {
     }
 
     public Teams(Long id, String team, String acronym, String fullName, Integer founded, String stadium, String city, String state, String region) {
@@ -107,5 +108,17 @@ public class Teams implements Serializable {
 
     public void setRegion(String region) {
         this.region = region;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Teams teams = (Teams) o;
+        return Objects.equals(id, teams.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }

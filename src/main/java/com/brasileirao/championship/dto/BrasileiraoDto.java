@@ -1,16 +1,11 @@
-package com.brasileirao.championship.Entities;
+package com.brasileirao.championship.dto;
 
-import jakarta.persistence.*;
+import com.brasileirao.championship.Entities.Brasileirao;
 
 import java.io.Serializable;
-import java.util.Objects;
 
-@Entity
-@Table(name = "brasileirao", schema = "public")
-public class Brasileirao implements Serializable {
+public class BrasileiraoDto implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Integer season;
     private Integer place;
@@ -21,17 +16,14 @@ public class Brasileirao implements Serializable {
     private Integer draw;
     private Integer loss;
     private Integer goals;
-    @Column(name = "goals_taken")
     private Integer goalsTaken;
-    @Column(name = "goals_diff")
     private Integer goalsDiff;
 
-    public Brasileirao() {
+    public BrasileiraoDto(){
 
     }
 
-
-    public Brasileirao(Long id, Integer season, Integer place, String team, Integer points, Integer played, Integer won, Integer draw, Integer loss, Integer goals, Integer goalsTaken, Integer goalsDiff) {
+    public BrasileiraoDto(Long id, Integer season, Integer place, String team, Integer points, Integer played, Integer won, Integer draw, Integer loss, Integer goals, Integer goalsTaken, Integer goalsDiff) {
         this.id = id;
         this.season = season;
         this.place = place;
@@ -44,6 +36,21 @@ public class Brasileirao implements Serializable {
         this.goals = goals;
         this.goalsTaken = goalsTaken;
         this.goalsDiff = goalsDiff;
+    }
+
+    public BrasileiraoDto(Brasileirao entity){
+        this.id = entity.getId();
+        this.season = entity.getSeason();
+        this.place = entity.getPlace();
+        this.team = entity.getTeam();
+        this.points = entity.getPoints();
+        this.played = entity.getPlayed();
+        this.won = entity.getWon();
+        this.draw = entity.getDraw();
+        this.loss = entity.getLoss();
+        this.goals = entity.getGoals();
+        this.goalsTaken = entity.getGoalsTaken();
+        this.goalsDiff = entity.getGoalsDiff();
     }
 
     public Long getId() {
@@ -140,17 +147,5 @@ public class Brasileirao implements Serializable {
 
     public void setGoalsDiff(Integer goalsDiff) {
         this.goalsDiff = goalsDiff;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        Brasileirao that = (Brasileirao) o;
-        return Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
     }
 }
