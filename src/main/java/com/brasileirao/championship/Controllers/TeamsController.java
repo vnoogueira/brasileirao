@@ -5,10 +5,7 @@ import com.brasileirao.championship.Services.TeamsServices;
 import com.brasileirao.championship.dto.TeamsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,8 +25,26 @@ public class TeamsController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<TeamsDto> findTeamsbyId(@PathVariable Long id){
+    public ResponseEntity<TeamsDto> findTeamsById(@PathVariable Long id) {
         TeamsDto dto = services.findTeamById(id);
         return ResponseEntity.ok().body(dto);
+    }
+
+    @PutMapping(value = "/update/{id}")
+    public ResponseEntity<TeamsDto> updateTeams(@PathVariable Long id, @RequestBody TeamsDto teams) {
+        TeamsDto dto = services.updateTeams(id, teams);
+        return ResponseEntity.ok().body(dto);
+    }
+
+    @PostMapping
+    public ResponseEntity<TeamsDto> insertTeams(@RequestBody TeamsDto entity) {
+        TeamsDto dto = services.insertTeams(entity);
+        return ResponseEntity.ok().body(dto);
+    }
+
+    @DeleteMapping(value = "/delete/{id}")
+    public ResponseEntity<TeamsDto> deleteTeam(@PathVariable Long id) {
+        services.deleteTeam(id);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -9,18 +9,22 @@ public class TeamsDto implements Serializable {
     private Long id;
     private String team;
     private String acronym;
-    private String full_name;
+    private String fullName;
     private Integer founded;
     private String stadium;
     private String city;
     private String state;
     private String region;
 
-    public TeamsDto(Long id, String team, String acronym, String full_name, Integer founded, String stadium, String city, String state, String region) {
+    public TeamsDto(){
+
+    }
+
+    public TeamsDto(Long id, String team, String acronym, String fullName, Integer founded, String stadium, String city, String state, String region) {
         this.id = id;
         this.team = team;
         this.acronym = acronym;
-        this.full_name = full_name;
+        this.fullName = fullName;
         this.founded = founded;
         this.stadium = stadium;
         this.city = city;
@@ -32,7 +36,7 @@ public class TeamsDto implements Serializable {
         this.id = teams.getId();
         this.team = teams.getTeam();
         this.acronym = teams.getAcronym();
-        this.full_name = teams.getFull_name();
+        this.fullName = teams.getFullName();
         this.founded = teams.getFounded();
         this.stadium = teams.getStadium();
         this.city = teams.getCity();
@@ -64,12 +68,12 @@ public class TeamsDto implements Serializable {
         this.acronym = acronym;
     }
 
-    public String getFull_name() {
-        return full_name;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setFull_name(String full_name) {
-        this.full_name = full_name;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public Integer getFounded() {

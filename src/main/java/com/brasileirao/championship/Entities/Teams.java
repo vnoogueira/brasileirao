@@ -14,7 +14,8 @@ public class Teams implements Serializable {
     private Long id;
     private String team;
     private String acronym;
-    private String full_name;
+    @Column(name = "full_name")
+    private String fullName;
     private Integer founded;
     private String stadium;
     private String city;
@@ -24,11 +25,11 @@ public class Teams implements Serializable {
     public Teams(){
     }
 
-    public Teams(Long id, String team, String acronym, String full_name, Integer founded, String stadium, String city, String state, String region) {
+    public Teams(Long id, String team, String acronym, String fullName, Integer founded, String stadium, String city, String state, String region) {
         this.id = id;
         this.team = team;
         this.acronym = acronym;
-        this.full_name = full_name;
+        this.fullName = fullName;
         this.founded = founded;
         this.stadium = stadium;
         this.city = city;
@@ -60,12 +61,12 @@ public class Teams implements Serializable {
         this.acronym = acronym;
     }
 
-    public String getFull_name() {
-        return full_name;
+    public String getFullName() {
+        return this.fullName;
     }
 
-    public void setFull_name(String full_name) {
-        this.full_name = full_name;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public Integer getFounded() {
