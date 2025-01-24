@@ -1,7 +1,6 @@
 package com.brasileirao.championship.dto;
 
 import com.brasileirao.championship.Entities.Brasileirao;
-import jakarta.persistence.Column;
 
 import java.io.Serializable;
 
