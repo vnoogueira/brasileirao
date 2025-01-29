@@ -29,6 +29,13 @@ public class TeamsServices {
         return new TeamsDto(teams);
     }
 
+    @Transactional(readOnly = true)
+    public TeamsDto findAllByTeam(String team) {
+        Optional<Teams> obj = repository.findAllByTeam(team);
+        Teams teamObj = obj.orElseThrow(() -> new ResourceNotFoundException("Team not found!"));
+        return new TeamsDto(teamObj);
+    }
+
     public TeamsDto updateTeams(Long id, TeamsDto teams) {
         try {
             Teams entity = repository.getReferenceById(id);
