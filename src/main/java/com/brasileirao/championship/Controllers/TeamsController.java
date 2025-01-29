@@ -30,6 +30,12 @@ public class TeamsController {
         return ResponseEntity.ok().body(dto);
     }
 
+    @GetMapping(value = "/team/{team}")
+    public ResponseEntity<TeamsDto> findAllByTeams(@PathVariable String team) {
+        TeamsDto dto = services.findAllByTeam(Character.toUpperCase(team.charAt(0)) + team.substring(1).toLowerCase());
+        return ResponseEntity.ok().body(dto);
+    }
+
     @PutMapping(value = "/update/{id}")
     public ResponseEntity<TeamsDto> updateTeams(@PathVariable Long id, @RequestBody TeamsDto teams) {
         TeamsDto dto = services.updateTeams(id, teams);
