@@ -25,11 +25,9 @@ public class TeamsServices {
     @Transactional(readOnly = true)
     public TeamsDto findTeamById(Long id) {
         Optional<Teams> obj = repository.findById(id);
-        Teams teams = obj
-                .orElseThrow(() -> new ResourceNotFoundException("Team not found !"));
+        Teams teams = obj.orElseThrow(() -> new ResourceNotFoundException("Team not found !"));
         return new TeamsDto(teams);
     }
-
 
     public TeamsDto updateTeams(Long id, TeamsDto teams) {
         try {
