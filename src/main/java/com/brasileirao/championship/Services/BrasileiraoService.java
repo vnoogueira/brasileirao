@@ -54,7 +54,6 @@ public class BrasileiraoService {
             dto.setGoalsDiff(body.getGoalsDiff());
             dto = repository.save(dto);
             return new BrasileiraoDto(dto);
-
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
