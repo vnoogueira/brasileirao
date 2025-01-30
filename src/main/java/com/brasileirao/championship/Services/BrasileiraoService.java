@@ -32,9 +32,31 @@ public class BrasileiraoService {
 
     public List<BrasileiraoDto> findAllByTeam(String team) {
         List<Brasileirao> obj = repository.findAllByTeam(team);
-        if(obj.isEmpty()){
+        if (obj.isEmpty()) {
             throw new ResourceNotFoundException("team not found!" + team);
         }
         return obj.stream().map(BrasileiraoDto::new).collect(Collectors.toList());
+    }
+
+    public BrasileiraoDto updateBrasileirao(Long id, BrasileiraoDto body) {
+        try {
+            Brasileirao dto = repository.getReferenceById(id);
+            dto.setSeason(body.getSeason());
+            dto.setPlace(body.getPlace());
+            dto.setTeam(body.getTeam());
+            dto.setPoints(body.getPoints());
+            dto.setPlayed(body.getPlayed());
+            dto.setWon(body.getWon());
+            dto.setDraw(body.getDraw());
+            dto.setLoss(body.getLoss());
+            dto.setGoals(body.getGoals());
+            dto.setGoalsTaken(body.getGoalsTaken());
+            dto.setGoalsDiff(body.getGoalsDiff());
+            dto = repository.save(dto);
+            return new BrasileiraoDto(dto);
+
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
