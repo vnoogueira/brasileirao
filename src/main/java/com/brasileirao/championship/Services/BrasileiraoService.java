@@ -1,7 +1,6 @@
 package com.brasileirao.championship.Services;
 
 import com.brasileirao.championship.Entities.Brasileirao;
-import com.brasileirao.championship.Entities.Teams;
 import com.brasileirao.championship.Repositories.BrasileiraoRepository;
 import com.brasileirao.championship.Services.Exceptions.ResourceNotFoundException;
 import com.brasileirao.championship.dto.BrasileiraoDto;
@@ -40,22 +39,39 @@ public class BrasileiraoService {
 
     public BrasileiraoDto updateBrasileirao(Long id, BrasileiraoDto body) {
         try {
-            Brasileirao dto = repository.getReferenceById(id);
-            dto.setSeason(body.getSeason());
-            dto.setPlace(body.getPlace());
-            dto.setTeam(body.getTeam());
-            dto.setPoints(body.getPoints());
-            dto.setPlayed(body.getPlayed());
-            dto.setWon(body.getWon());
-            dto.setDraw(body.getDraw());
-            dto.setLoss(body.getLoss());
-            dto.setGoals(body.getGoals());
-            dto.setGoalsTaken(body.getGoalsTaken());
-            dto.setGoalsDiff(body.getGoalsDiff());
-            dto = repository.save(dto);
-            return new BrasileiraoDto(dto);
+            Brasileirao obj = repository.getReferenceById(id);
+            obj.setSeason(body.getSeason());
+            obj.setPlace(body.getPlace());
+            obj.setTeam(body.getTeam());
+            obj.setPoints(body.getPoints());
+            obj.setPlayed(body.getPlayed());
+            obj.setWon(body.getWon());
+            obj.setDraw(body.getDraw());
+            obj.setLoss(body.getLoss());
+            obj.setGoals(body.getGoals());
+            obj.setGoalsTaken(body.getGoalsTaken());
+            obj.setGoalsDiff(body.getGoalsDiff());
+            obj = repository.save(obj);
+            return new BrasileiraoDto(obj);
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public BrasileiraoDto insertBrasileirao(BrasileiraoDto body) {
+        Brasileirao obj = new Brasileirao();
+        obj.setSeason(body.getSeason());
+        obj.setPlace(body.getPlace());
+        obj.setTeam(body.getTeam());
+        obj.setPoints(body.getPoints());
+        obj.setPlayed(body.getPlayed());
+        obj.setWon(body.getWon());
+        obj.setDraw(body.getDraw());
+        obj.setLoss(body.getLoss());
+        obj.setGoals(body.getGoals());
+        obj.setGoalsTaken(body.getGoalsTaken());
+        obj.setGoalsDiff(body.getGoalsDiff());
+        obj = repository.save(obj);
+        return new BrasileiraoDto(obj);
     }
 }

@@ -7,7 +7,9 @@ import com.brasileirao.championship.dto.TeamsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,5 +43,12 @@ public class BrasileiraoController {
     public ResponseEntity<BrasileiraoDto> updateBrasileirao(@PathVariable Long id, @RequestBody BrasileiraoDto body){
         BrasileiraoDto obj = service.updateBrasileirao(id, body);
         return ResponseEntity.ok().body(obj);
+    }
+
+    @PostMapping(value = "/insert")
+    public ResponseEntity<BrasileiraoDto> insertBrasileirao(@RequestBody BrasileiraoDto body) {
+        BrasileiraoDto obj = service.insertBrasileirao(body);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+        return ResponseEntity.created(uri).body(obj);
     }
 }
