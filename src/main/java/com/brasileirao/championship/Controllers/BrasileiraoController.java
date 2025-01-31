@@ -40,7 +40,7 @@ public class BrasileiraoController {
     }
 
     @PutMapping(value = "/update/{id}")
-    public ResponseEntity<BrasileiraoDto> updateBrasileirao(@PathVariable Long id, @RequestBody BrasileiraoDto body){
+    public ResponseEntity<BrasileiraoDto> updateBrasileirao(@PathVariable Long id, @RequestBody BrasileiraoDto body) {
         BrasileiraoDto obj = service.updateBrasileirao(id, body);
         return ResponseEntity.ok().body(obj);
     }
@@ -50,5 +50,11 @@ public class BrasileiraoController {
         BrasileiraoDto obj = service.insertBrasileirao(body);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).body(obj);
+    }
+
+    @DeleteMapping(value = "/delete/{id}")
+    public ResponseEntity<BrasileiraoDto> deleteBrasileirao(@PathVariable Long id) {
+        service.deleteBrasileirao(id);
+        return ResponseEntity.noContent().build();
     }
 }
