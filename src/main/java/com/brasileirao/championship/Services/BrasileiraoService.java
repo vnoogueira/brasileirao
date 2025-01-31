@@ -74,4 +74,12 @@ public class BrasileiraoService {
         obj = repository.save(obj);
         return new BrasileiraoDto(obj);
     }
+
+    public void deleteBrasileirao(Long id) {
+        try {
+            repository.deleteById(id);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
