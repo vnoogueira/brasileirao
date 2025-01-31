@@ -9,7 +9,7 @@ Este projeto fornece dados sobre os principais times do Brasil e os campeonatos 
 - **Spring Data JPA**
 - **Banco de Dados** (extraído do Kaggle)
 - **PostgreSQL** (Recomendado)
-- **Maven
+- Maven
 
 ## Como Rodar o Projeto
 1. Clone o repositório:
