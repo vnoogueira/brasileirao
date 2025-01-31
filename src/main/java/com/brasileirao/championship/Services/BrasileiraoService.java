@@ -6,8 +6,6 @@ import com.brasileirao.championship.Services.Exceptions.ResourceNotFoundExceptio
 import com.brasileirao.championship.dto.BrasileiraoDto;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,24 +42,22 @@ public class BrasileiraoService {
 
     @Transactional
     public BrasileiraoDto updateBrasileirao(Long id, BrasileiraoDto body) {
-        try {
-            Brasileirao obj = repository.getReferenceById(id);
-            obj.setSeason(body.getSeason());
-            obj.setPlace(body.getPlace());
-            obj.setTeam(body.getTeam());
-            obj.setPoints(body.getPoints());
-            obj.setPlayed(body.getPlayed());
-            obj.setWon(body.getWon());
-            obj.setDraw(body.getDraw());
-            obj.setLoss(body.getLoss());
-            obj.setGoals(body.getGoals());
-            obj.setGoalsTaken(body.getGoalsTaken());
-            obj.setGoalsDiff(body.getGoalsDiff());
-            obj = repository.save(obj);
-            return new BrasileiraoDto(obj);
-        } catch (EntityNotFoundException e) {
-            throw new RuntimeException("ID not found: " + id);
-        }
+        String team = body.getTeam();
+        Brasileirao obj = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Team not found with id: " + id + " - " + team));
+        obj.setSeason(body.getSeason());
+        obj.setPlace(body.getPlace());
+        obj.setTeam(body.getTeam());
+        obj.setPoints(body.getPoints());
+        obj.setPlayed(body.getPlayed());
+        obj.setWon(body.getWon());
+        obj.setDraw(body.getDraw());
+        obj.setLoss(body.getLoss());
+        obj.setGoals(body.getGoals());
+        obj.setGoalsTaken(body.getGoalsTaken());
+        obj.setGoalsDiff(body.getGoalsDiff());
+
+        obj = repository.save(obj);
+        return new BrasileiraoDto(obj);
     }
 
     @Transactional(readOnly = true)
