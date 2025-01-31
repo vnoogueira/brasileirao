@@ -4,7 +4,10 @@ import com.brasileirao.championship.Entities.Brasileirao;
 import com.brasileirao.championship.Repositories.BrasileiraoRepository;
 import com.brasileirao.championship.Services.Exceptions.ResourceNotFoundException;
 import com.brasileirao.championship.dto.BrasileiraoDto;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,20 +26,23 @@ public class BrasileiraoService {
         return repository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public BrasileiraoDto findById(Long id) {
         Optional<Brasileirao> obj = repository.findById(id);
-        Brasileirao brasileirao = obj.orElseThrow(() -> new ResourceNotFoundException("Search not found !"));
+        Brasileirao brasileirao = obj.orElseThrow(() -> new ResourceNotFoundException("ID not found: " + id));
         return new BrasileiraoDto(brasileirao);
     }
 
+    @Transactional(readOnly = true)
     public List<BrasileiraoDto> findAllByTeam(String team) {
         List<Brasileirao> obj = repository.findAllByTeam(team);
         if (obj.isEmpty()) {
-            throw new ResourceNotFoundException("team not found!" + team);
+            throw new ResourceNotFoundException("Team not found: " + team);
         }
         return obj.stream().map(BrasileiraoDto::new).collect(Collectors.toList());
     }
 
+    @Transactional
     public BrasileiraoDto updateBrasileirao(Long id, BrasileiraoDto body) {
         try {
             Brasileirao obj = repository.getReferenceById(id);
@@ -53,11 +59,12 @@ public class BrasileiraoService {
             obj.setGoalsDiff(body.getGoalsDiff());
             obj = repository.save(obj);
             return new BrasileiraoDto(obj);
-        } catch (RuntimeException e) {
-            throw new RuntimeException(e);
+        } catch (EntityNotFoundException e) {
+            throw new RuntimeException("ID not found: " + id);
         }
     }
 
+    @Transactional(readOnly = true)
     public BrasileiraoDto insertBrasileirao(BrasileiraoDto body) {
         Brasileirao obj = new Brasileirao();
         obj.setSeason(body.getSeason());
@@ -76,10 +83,10 @@ public class BrasileiraoService {
     }
 
     public void deleteBrasileirao(Long id) {
-        try {
-            repository.deleteById(id);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        boolean existsEntity = repository.existsById(id);
+        if (!existsEntity) {
+            throw new ResourceNotFoundException("ID not found: " + id);
         }
+        repository.deleteById(id);
     }
 }
