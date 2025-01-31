@@ -36,6 +36,7 @@ public class TeamsServices {
         return new TeamsDto(teamObj);
     }
 
+    @Transactional
     public TeamsDto updateTeams(Long id, TeamsDto teams) {
         try {
             Teams entity = repository.getReferenceById(id);
@@ -53,6 +54,7 @@ public class TeamsServices {
         }
     }
 
+    @Transactional(readOnly = true)
     public TeamsDto insertTeams(TeamsDto entity) {
         Teams teams = new Teams();
         teams.setTeam(entity.getTeam());
